@@ -1,0 +1,3 @@
+/home/ray/桌面/ncnnCVCompil/build/CMakeFiles/rebuild_cache.dir
+/home/ray/桌面/ncnnCVCompil/build/CMakeFiles/ncnnOpencv.dir
+/home/ray/桌面/ncnnCVCompil/build/CMakeFiles/edit_cache.dir

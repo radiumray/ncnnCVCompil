@@ -1,0 +1,85 @@
+/*
+#include <stdlib.h>  
+#include <sys/types.h>  
+#include <unistd.h>
+#include <stdio.h>
+
+using namespace std;
+
+// int main()  
+// {  
+//     pid_t child_pid;  
+  
+//     // 创建一个子进程 
+//     child_pid = fork();  
+//     if(child_pid == 0)  
+//     {
+//         printf("child pid\n");  
+//         exit(0);  
+//     }  
+//     else  
+//     {  
+//         printf("father pid\n");  
+//         sleep(60);  
+//     }  
+      
+//     return 0;  
+// }  
+*/
+
+
+#include <iostream>
+#include <pthread.h>
+#include <stdlib.h>  
+#include <sys/types.h>  
+#include <unistd.h>
+#include <stdio.h>
+#include <cstdlib>
+ 
+using namespace std;
+ 
+#define NUM_THREADS     5
+ 
+struct thread_data{
+    int  thread_id;
+    char *message;
+};
+ 
+void *PrintHello(void *threadarg)
+{
+    struct thread_data *my_data;
+
+    my_data = (struct thread_data *) threadarg;
+
+    for(int i=0; i<5; i++) {
+        cout << "线程 ID : " << my_data->thread_id ;
+        cout << " 消息 : " << my_data->message << endl;
+        sleep(1);
+    }
+
+    pthread_exit(NULL);
+}
+ 
+int main ()
+{
+   pthread_t threads[NUM_THREADS];
+   struct thread_data td[NUM_THREADS];
+   int rc;
+   int i;
+
+   for( i=0; i < NUM_THREADS; i++ ){
+      cout <<"main() : creating thread, " << i << endl;
+      td[i].thread_id = i;
+      td[i].message = (char*)"This is message";
+      rc = pthread_create(&threads[i], NULL,
+                          PrintHello, (void *)&td[i]);
+      if (rc){
+         cout << "Error:unable to create thread," << rc << endl;
+         exit(-1);
+      }
+   }
+   pthread_exit(NULL);
+}
+
+
+

@@ -1,0 +1,27 @@
+cmake_minimum_required(VERSION 3.4.1)
+
+project(ncnnOpencv)
+
+find_package(OpenCV REQUIRED)       # 查找OpenCV
+
+# ncnn项目所在路径，需要替换
+set(NCNN_DIR /home/ray/ncnn)
+
+# 引入NNCN的头文件
+include_directories(${NCNN_DIR}/build/install/include/)
+
+link_directories(${NCNN_DIR}/build/install/lib)
+
+# 设置OpenCV和NNCN的链接库
+set(NCNN_LINK_LIBRARIES ${OpenCV_LIBS} ${NCNN_DIR}/build/install/lib/libncnn.a)
+
+
+add_executable(ncnnOpencv Main.cpp)
+
+# 将目标文件与库文件进行链接
+target_link_libraries( ncnnOpencv ${NCNN_LINK_LIBRARIES} )
+
+
+# target_link_libraries(ncnnOpencv ${OpenCV_LIBS}) 
+set_property(TARGET ncnnOpencv PROPERTY CXX_STANDARD 11)
+
